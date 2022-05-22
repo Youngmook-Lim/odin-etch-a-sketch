@@ -5,6 +5,8 @@ const container = document.querySelector(".container");
 const btnDim = document.querySelector(".btn-dim");
 const btnBasic = document.querySelector(".btn-basic");
 const btnRandom = document.querySelector(".btn-random");
+const TILECOLOR = [205, 58, 52];
+let basic = 1;
 
 const dim = document.querySelector(".dimensions");
 const divs = document.createElement("div");
@@ -41,22 +43,31 @@ const RGBToHSL = (r, g, b) => {
 container.addEventListener("mouseover", function (e) {
   if (e.target.classList.contains("divs")) {
     e.target.classList.add("hover");
-
-    if (e.target.getAttribute("data-light") === "0") {
-      const rgb = randomRgbaString();
-      const hsl = RGBToHSL(rgb[0], rgb[1], rgb[2]);
-      e.target.setAttribute("data-h", hsl[0]);
-      e.target.setAttribute("data-s", hsl[1]);
-      e.target.setAttribute("data-l", hsl[2]);
-    }
-    const h = e.target.getAttribute("data-h");
-    const s = e.target.getAttribute("data-s");
-    const l = e.target.getAttribute("data-l");
     const light = e.target.getAttribute("data-light");
+    let h;
+    let s;
+    let l;
+
+    if (basic === 0) {
+      if (e.target.getAttribute("data-light") === "0") {
+        const rgb = randomRgbaString();
+        const hsl = RGBToHSL(rgb[0], rgb[1], rgb[2]);
+        e.target.setAttribute("data-h", hsl[0]);
+        e.target.setAttribute("data-s", hsl[1]);
+        e.target.setAttribute("data-l", hsl[2]);
+      }
+      h = e.target.getAttribute("data-h");
+      s = e.target.getAttribute("data-s");
+      l = e.target.getAttribute("data-l");
+    }
+
     e.target.setAttribute(`data-light`, +light + 5);
-    e.target.style.backgroundColor = `hsl(${h}, ${s}%, ${
-      l - +e.target.dataset.light
-    }%)`;
+    e.target.style.backgroundColor =
+      basic === 0
+        ? `hsl(${h}, ${s}%, ${l - +e.target.dataset.light}%)`
+        : `hsl(${TILECOLOR[0]}, ${TILECOLOR[1]}%, ${
+            TILECOLOR[2] - +e.target.dataset.light
+          }%)`;
   }
 });
 
@@ -79,7 +90,7 @@ btnDim.addEventListener("click", function () {
   setContainer(dimension);
 });
 
-btnBasic.addEventListener("click", function (e) {
+btnBasic.addEventListener("click", function () {
   [...document.getElementsByClassName("divs")].forEach((div) => {
     div.setAttribute("data-light", 0);
     div.classList.remove("hover");
@@ -88,4 +99,17 @@ btnBasic.addEventListener("click", function (e) {
     div.removeAttribute("data-l");
     div.style = "";
   });
+  basic = 1;
+});
+
+btnRandom.addEventListener("click", function () {
+  [...document.getElementsByClassName("divs")].forEach((div) => {
+    div.setAttribute("data-light", 0);
+    div.classList.remove("hover");
+    div.removeAttribute("data-h");
+    div.removeAttribute("data-s");
+    div.removeAttribute("data-l");
+    div.style = "";
+  });
+  basic = 0;
 });
