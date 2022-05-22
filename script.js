@@ -4,15 +4,16 @@ const container = document.querySelector(".container");
 const btnDim = document.querySelector(".btn-dim");
 const btnBasic = document.querySelector(".btn-basic");
 const btnRandom = document.querySelector(".btn-random");
-const TILECOLOR = [205, 58, 57];
+const btnClear = document.querySelector(".btn-clear");
+const colorPicker = document.querySelector(".color");
+const DEFAULTCOLOR = { h: 205, s: 58, l: 57 };
+let CURRENTCOLOR = DEFAULTCOLOR;
 let basic = 1;
 let mouseDown = false;
 document.body.onmousedown = () => {
-  console.log(mouseDown);
   mouseDown = true;
 };
 document.body.onmouseup = () => {
-  console.log(mouseDown);
   mouseDown = false;
 };
 
@@ -23,6 +24,49 @@ const randomRgbaString = function () {
   let g = Math.floor(Math.random() * 255);
   let b = Math.floor(Math.random() * 255);
   return [r, g, b];
+};
+
+const hexToHSL = function (hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  let r = parseInt(result[1], 16);
+  let g = parseInt(result[2], 16);
+  let b = parseInt(result[3], 16);
+  (r /= 255), (g /= 255), (b /= 255);
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h,
+    s,
+    l = (max + min) / 2;
+  if (max == min) {
+    h = s = 0; // achromatic
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        h = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        h = (b - r) / d + 2;
+        break;
+      case b:
+        h = (r - g) / d + 4;
+        break;
+    }
+    h /= 6;
+  }
+
+  s = s * 100;
+  s = Math.round(s);
+  l = l * 100;
+  l = Math.round(l);
+  h = Math.round(360 * h);
+
+  const HSL = new Object();
+  HSL["h"] = h;
+  HSL["s"] = s;
+  HSL["l"] = l;
+  return HSL;
 };
 
 const RGBToHSL = (r, g, b) => {
@@ -44,6 +88,14 @@ const RGBToHSL = (r, g, b) => {
     (100 * (2 * l - s)) / 2,
   ];
 };
+
+const setCurrentColor = function (e) {
+  const color = e.target.value;
+  const newColor = hexToHSL(color);
+  CURRENTCOLOR = newColor;
+};
+
+colorPicker.addEventListener("change", setCurrentColor);
 
 const changeColor = function (e) {
   if (e.type === "mouseover" && !mouseDown) return;
@@ -72,8 +124,8 @@ const changeColor = function (e) {
     e.target.style.backgroundColor =
       basic === 0
         ? `hsl(${h}, ${s}%, ${l - +e.target.dataset.light}%)`
-        : `hsl(${TILECOLOR[0]}, ${TILECOLOR[1]}%, ${
-            TILECOLOR[2] - +e.target.dataset.light
+        : `hsl(${CURRENTCOLOR.h}, ${CURRENTCOLOR.s}%, ${
+            CURRENTCOLOR.l - +e.target.dataset.light
           }%)`;
   }
 };
@@ -122,6 +174,10 @@ btnRandom.addEventListener("click", function () {
     div.style = "";
   });
   basic = 0;
+});
+
+btnClear.addEventListener("click", function () {
+  setContainer();
 });
 
 window.onload = () => {
