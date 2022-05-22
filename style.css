@@ -6,7 +6,11 @@
 
 html {
   font-size: 62.5%;
-  background-color: #eee;
+  background: linear-gradient(
+    90deg,
+    hsla(298, 68%, 90%, 1) 0%,
+    hsla(30, 82%, 91%, 1) 100%
+  );
 }
 
 .heading {
@@ -70,11 +74,10 @@ html {
   /* gap: 0.4rem; */
   border: 1px solid #1e1b18;
   margin: 0 auto;
+  background-color: #f8f9fa;
 }
 
 .divs {
-  /* background-color: #d8315b; */
-  background-color: #eee;
   border: 1px solid #1e1b18;
   width: 100%;
   transition: all 0.2s;

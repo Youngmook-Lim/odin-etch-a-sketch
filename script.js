@@ -5,7 +5,7 @@ const container = document.querySelector(".container");
 const btnDim = document.querySelector(".btn-dim");
 const btnBasic = document.querySelector(".btn-basic");
 const btnRandom = document.querySelector(".btn-random");
-const TILECOLOR = [205, 58, 52];
+const TILECOLOR = [205, 58, 57];
 let basic = 1;
 
 const dim = document.querySelector(".dimensions");
