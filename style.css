@@ -50,6 +50,11 @@ html {
   color: #1e1b18;
   background-color: hsla(205, 58%, 52%, 0.6);
   padding: 1.2rem;
+  transition: all 0.1s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
 }
 
 .btn-basic {
@@ -91,7 +96,7 @@ html {
 }
 
 .divs:hover {
-  transform: scale(1.5);
+  transform: scale(1.2);
   z-index: 1000;
 }
 

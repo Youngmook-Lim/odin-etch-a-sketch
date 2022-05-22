@@ -7,8 +7,14 @@ const btnRandom = document.querySelector(".btn-random");
 const TILECOLOR = [205, 58, 57];
 let basic = 1;
 let mouseDown = false;
-document.body.onmousedown = () => (mouseDown = true);
-document.body.onmouseup = () => (mouseDown = false);
+document.body.onmousedown = () => {
+  console.log(mouseDown);
+  mouseDown = true;
+};
+document.body.onmouseup = () => {
+  console.log(mouseDown);
+  mouseDown = false;
+};
 
 const dim = document.querySelector(".dimensions");
 
@@ -41,8 +47,9 @@ const RGBToHSL = (r, g, b) => {
 
 const changeColor = function (e) {
   if (e.type === "mouseover" && !mouseDown) return;
+  // console.log(e.type);
   if (e.target.classList.contains("divs")) {
-    e.target.classList.add("hover");
+    // e.target.classList.add("hover");
     const light = e.target.getAttribute("data-light");
     let h;
     let s;
