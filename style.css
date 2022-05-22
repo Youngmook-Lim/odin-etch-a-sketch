@@ -74,6 +74,7 @@ html {
   border: 0.5px solid #1e1b18;
   margin: 0 auto;
   background-color: #f8f9fa;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .divs {

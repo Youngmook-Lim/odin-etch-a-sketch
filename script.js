@@ -1,5 +1,4 @@
 "use strict";
-console.log("hola");
 
 const container = document.querySelector(".container");
 const btnDim = document.querySelector(".btn-dim");
@@ -7,11 +6,11 @@ const btnBasic = document.querySelector(".btn-basic");
 const btnRandom = document.querySelector(".btn-random");
 const TILECOLOR = [205, 58, 57];
 let basic = 1;
+let mouseDown = false;
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
 
 const dim = document.querySelector(".dimensions");
-const divs = document.createElement("div");
-divs.classList.add("divs");
-divs.setAttribute("data-light", 0);
 
 const randomRgbaString = function () {
   let r = Math.floor(Math.random() * 255);
@@ -40,7 +39,8 @@ const RGBToHSL = (r, g, b) => {
   ];
 };
 
-container.addEventListener("mouseover", function (e) {
+const changeColor = function (e) {
+  if (e.type === "mouseover" && !mouseDown) return;
   if (e.target.classList.contains("divs")) {
     e.target.classList.add("hover");
     const light = e.target.getAttribute("data-light");
@@ -69,18 +69,21 @@ container.addEventListener("mouseover", function (e) {
             TILECOLOR[2] - +e.target.dataset.light
           }%)`;
   }
-});
+};
 
 const setContainer = function (dimension = 16) {
   container.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
   container.innerHTML = "";
   for (let i = 0; i < dimension ** 2; i++) {
-    container.appendChild(divs.cloneNode(true));
+    const divs = document.createElement("div");
+    divs.classList.add("divs");
+    container.addEventListener("mouseover", changeColor);
+    container.addEventListener("mousedown", changeColor);
+    divs.setAttribute("data-light", 0);
+    container.appendChild(divs);
   }
   dim.textContent = `${dimension} x ${dimension}`;
 };
-
-setContainer();
 
 btnDim.addEventListener("click", function () {
   const dimension = prompt("Enter dimension!");
@@ -113,3 +116,7 @@ btnRandom.addEventListener("click", function () {
   });
   basic = 0;
 });
+
+window.onload = () => {
+  setContainer();
+};
