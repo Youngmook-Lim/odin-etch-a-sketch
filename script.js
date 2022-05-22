@@ -3,6 +3,7 @@ console.log("hola");
 
 const container = document.querySelector(".container");
 const btn = document.querySelector(".btn");
+const dim = document.querySelector(".dimensions");
 const divs = document.createElement("div");
 divs.classList.add("divs");
 divs.setAttribute("data-light", 0);
@@ -21,12 +22,13 @@ container.addEventListener("mouseover", function (e) {
   }
 });
 
-const setContainer = function (dimension = 30) {
+const setContainer = function (dimension = 16) {
   container.style.gridTemplateColumns = `repeat(${dimension}, 1fr)`;
   container.innerHTML = "";
   for (let i = 0; i < dimension ** 2; i++) {
     container.appendChild(divs.cloneNode(true));
   }
+  dim.textContent = `${dimension} x ${dimension}`;
 };
 
 setContainer();
