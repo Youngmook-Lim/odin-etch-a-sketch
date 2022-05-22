@@ -33,6 +33,9 @@ html {
 .btns {
   flex: 1;
   text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
 }
 
 .btn {
@@ -43,6 +46,18 @@ html {
   color: #1e1b18;
   background-color: hsla(205, 58%, 52%, 0.6);
   padding: 1.2rem;
+}
+
+.btn-basic {
+  background-color: hsla(129, 58%, 52%, 0.6);
+}
+
+.btn-random {
+  background-color: hsla(312, 58%, 52%, 0.6);
+}
+
+.btn-dim {
+  grid-column: span 2;
 }
 
 .container {
@@ -57,7 +72,8 @@ html {
 }
 
 .divs {
-  background-color: #d8315b;
+  /* background-color: #d8315b; */
+  background-color: #eee;
   border: 1px solid #1e1b18;
   width: 100%;
   transition: all 0.2s;

@@ -2,7 +2,10 @@
 console.log("hola");
 
 const container = document.querySelector(".container");
-const btn = document.querySelector(".btn");
+const btnDim = document.querySelector(".btn-dim");
+const btnBasic = document.querySelector(".btn-basic");
+const btnRandom = document.querySelector(".btn-random");
+
 const dim = document.querySelector(".dimensions");
 const divs = document.createElement("div");
 divs.classList.add("divs");
@@ -42,7 +45,6 @@ container.addEventListener("mouseover", function (e) {
     if (e.target.getAttribute("data-light") === "0") {
       const rgb = randomRgbaString();
       const hsl = RGBToHSL(rgb[0], rgb[1], rgb[2]);
-      console.log(hsl);
       e.target.setAttribute("data-h", hsl[0]);
       e.target.setAttribute("data-s", hsl[1]);
       e.target.setAttribute("data-l", hsl[2]);
@@ -69,10 +71,21 @@ const setContainer = function (dimension = 16) {
 
 setContainer();
 
-btn.addEventListener("click", function () {
+btnDim.addEventListener("click", function () {
   const dimension = prompt("Enter dimension!");
   if (dimension > 100) {
     return alert("Dimension can't be over 100 :(");
   }
   setContainer(dimension);
+});
+
+btnBasic.addEventListener("click", function (e) {
+  [...document.getElementsByClassName("divs")].forEach((div) => {
+    div.setAttribute("data-light", 0);
+    div.classList.remove("hover");
+    div.removeAttribute("data-h");
+    div.removeAttribute("data-s");
+    div.removeAttribute("data-l");
+    div.style = "";
+  });
 });
