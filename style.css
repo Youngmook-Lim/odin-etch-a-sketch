@@ -70,8 +70,13 @@ body {
 }
 
 .btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.025);
+  /* z-index: 10; */
 }
+
+/* .btn:active {
+  transform: scale(0.975);
+} */
 
 .btn-dim {
   background-color: hsla(205, 58%, 52%, 0.6);
@@ -80,13 +85,58 @@ body {
 }
 
 .btn-basic {
-  background-color: hsla(129, 58%, 52%, 0.6);
+  background-color: hsl(129, 58%, 52%);
   grid-column: span 2;
 }
 
 .btn-random {
-  background-color: hsla(312, 58%, 52%, 0.6);
+  background-color: hsl(312, 58%, 52%);
   grid-column: span 2;
+}
+
+.active-btn {
+  position: relative;
+  --borderWidth: 5px;
+}
+
+.active-btn:after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(
+    60deg,
+    #f79533,
+    #f37055,
+    #ef4e7b,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  border-radius: 9px;
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+.active-btn:hover {
+  transform: none;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .btn-clear {
@@ -135,14 +185,16 @@ label > span {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(16, 1fr);
-  border: 0.5px solid var(--primary-dark);
+  border: 2px solid var(--primary-dark);
+  border-radius: 9px;
   margin: 0 auto;
+  padding: 1rem;
   background-color: #f8f9fa;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .divs {
-  border: 0.5px solid var(--primary-dark);
+  /* border: 0.5px solid var(--primary-dark); */
   width: 100%;
   transition: all 0.2s;
 }
@@ -170,3 +222,27 @@ label > span {
   bottom: 0px;
   right: 0px;
 } */
+
+.footer {
+  /* position: absolute;
+  bottom: 0;
+  left: 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 3.2rem;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.fa-github {
+  color: #3d5467;
+  font-size: 24px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.fa-github:hover {
+  transform: rotate(360deg) scale(1.2);
+}

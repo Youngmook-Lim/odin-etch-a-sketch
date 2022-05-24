@@ -146,6 +146,8 @@ const setContainer = function (dimension = 16) {
 
 btnDim.addEventListener("click", function () {
   const dimension = prompt("Enter dimension!");
+  if (!dimension) return;
+  if (isNaN(+dimension)) return alert("Dimension can only be a number!");
   if (dimension > 100) {
     return alert("Dimension can't be over 100 :(");
   }
@@ -162,6 +164,8 @@ btnBasic.addEventListener("click", function () {
     div.style = "";
   });
   basic = 1;
+  btnRandom.classList.remove("active-btn");
+  btnBasic.classList.add("active-btn");
 });
 
 btnRandom.addEventListener("click", function () {
@@ -174,6 +178,8 @@ btnRandom.addEventListener("click", function () {
     div.style = "";
   });
   basic = 0;
+  btnBasic.classList.remove("active-btn");
+  btnRandom.classList.add("active-btn");
 });
 
 btnClear.addEventListener("click", function () {
